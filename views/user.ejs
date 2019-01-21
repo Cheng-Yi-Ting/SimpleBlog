@@ -1,0 +1,5 @@
+<!-- 把重复用到的部分都提取出来，分别放入 say.ejs 和 posts.ejs。say.ejs 的功能是显示一个发表微博的表单!-->
+<% if (user) { %>
+<%- include say %>
+<% } %>
+<%- include posts %>

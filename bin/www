@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+// var debug = require('debug')('cookbook-nodejs:server');
+var http = require('http');
+
+/*
+ * Get port from environment and store in Express.
+ */
+// 环境变量要是设置了PORT，那么就用环境变量的PORT，沒有就是3000
+var port = normalizePort(process.env.PORT || '3000');
+// console.log(port)
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  // 沒有設環境變數，val=3000
+  // parseInt : 字串轉整數
+  var port = parseInt(val, 10);
+  // console.log(port)
+  // isNaN() 函数用于检查其参数是否是非数字值。
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  // 以下例子為執行./bin/www兩次，會跳出port已經被占用的錯誤訊息
+  // error:{ Error: listen EADDRINUSE: address already in use :::3000......}
+  // error.syscall:listen
+  // bind : Port 3000
+  // error.code:EADDRINUSE
+  // process.exit()方法以结束状态码code指示Node.js同步终止进程
+  // 狀態碼為1:1 - Uncaught Fatal Exception: There was an uncaught exception, and it was not handled by a domain or an uncaughtException event handler.
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use.');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  // addr : { address: '::', family: 'IPv6', port: 3000 }
+  // bind : port 3000
+  // addr =object
+  // bind =false
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  // debug('Listening on ' + bind);
+}

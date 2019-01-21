@@ -1,0 +1,30 @@
+<!-- 这个表单中有3个输入单元，分别是 username 、 password 和 password-repeat 。
+表单的请求方法是 POST，将会发送到相同的路径下。 
+-->
+<form class="form-horizontal" method="post">
+    <fieldset>
+        <legend>使用者註冊</legend>
+        <div class="control-group">
+            <label class="control-label" for="username">帳號名稱</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" id="username" name="username">
+                <p class="help-block">你的帳號名稱，用於登錄和顯示</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">密碼</label>
+            <div class="controls">
+                <input type="password" class="input-xlarge" id="password" name="password">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password-repeat">密碼確認</label>
+            <div class="controls">
+                <input type="password" class="input-xlarge" id="password-repeat" name="password-repeat">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">註冊</button>
+        </div>
+    </fieldset>
+</form>
